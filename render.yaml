@@ -19,4 +19,4 @@ services:
       - key: NODE_ENV
         value: "production"
       - key: WEBHOOK_URL
-        value: "https://n8n.onrender.com/"
+        value: "https://n8n-m1v5.onrender.com/"
