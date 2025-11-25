@@ -1,22 +1,32 @@
 services:
   - type: web
-    name: n8n
-    env: docker
     plan: free
-    region: oregon
-    buildCommand: ""
+    runtime: image
+    name: n8n-service
+    image:
+      url: docker.io/n8nio/n8n:latest
     envVars:
-      - key: N8N_BASIC_AUTH_ACTIVE
-        value: "true"
-      - key: N8N_BASIC_AUTH_USER
-        value: "admin"
-      - key: N8N_BASIC_AUTH_PASSWORD
-        value: "admin123"
-      - key: N8N_HOST
-        value: "n8n-m1v5.onrender.com"
-      - key: N8N_PORT
-        value: "5678"
-      - key: NODE_ENV
-        value: "production"
-      - key: WEBHOOK_URL
-        value: "https://n8n-m1v5.onrender.com/"
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8n-db
+          property: database
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: n8n-db
+          property: host
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: n8n-db
+          property: password
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: n8n-db
+          property: user
+
+databases:
+  - name: n8n-db
+    plan: free
