@@ -1,10 +1,10 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:latest-debian
 
-# Set the timezone
+# Set timezone
 ENV GENERIC_TIMEZONE="America/Edmonton"
 
-# Expose default port
+# Expose n8n port
 EXPOSE 5678
 
-# Start n8n
-CMD ["n8n"]
+# Start n8n via PM2 (recommended for Render)
+CMD ["pm2-runtime", "n8n"]
